@@ -1,0 +1,105 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample articles server.",
+        "title": "Bodyshop API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:5000",
+    "basePath": "/api/v1",
+    "paths": {
+        "/send": {
+            "post": {
+                "description": "Construct message by template and params and send it to mailsender for receivers",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Send message to mailsender",
+                "parameters": [
+                    {
+                        "description": "New Incoming Request",
+                        "name": "incomingRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.IncomingRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.response"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.IncomingRequest": {
+            "type": "object",
+            "properties": {
+                "parameters": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.TemplateParameter"
+                    }
+                },
+                "receivers": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "template_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.TemplateParameter": {
+            "type": "object",
+            "properties": {
+                "parameter_name": {
+                    "type": "string"
+                },
+                "parameter_value": {
+                    "type": "string"
+                }
+            }
+        },
+        "utils.response": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "error": {},
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        }
+    },
+    "x-extension-openapi": {
+        "example": "value on a json format"
+    }
+}

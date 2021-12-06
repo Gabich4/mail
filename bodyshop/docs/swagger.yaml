@@ -1,0 +1,71 @@
+basePath: /api/v1
+definitions:
+  models.IncomingRequest:
+    properties:
+      parameters:
+        items:
+          $ref: '#/definitions/models.TemplateParameter'
+        type: array
+      receivers:
+        items:
+          type: string
+        type: array
+      template_id:
+        type: string
+    type: object
+  models.TemplateParameter:
+    properties:
+      parameter_name:
+        type: string
+      parameter_value:
+        type: string
+    type: object
+  utils.response:
+    properties:
+      data: {}
+      error: {}
+      success:
+        type: boolean
+    type: object
+host: localhost:5000
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample articles server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Bodyshop API
+  version: "1.0"
+paths:
+  /send:
+    post:
+      consumes:
+      - application/json
+      description: Construct message by template and params and send it to mailsender
+        for receivers
+      parameters:
+      - description: New Incoming Request
+        in: body
+        name: incomingRequest
+        required: true
+        schema:
+          $ref: '#/definitions/models.IncomingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.response'
+      summary: Send message to mailsender
+swagger: "2.0"
+x-extension-openapi:
+  example: value on a json format
